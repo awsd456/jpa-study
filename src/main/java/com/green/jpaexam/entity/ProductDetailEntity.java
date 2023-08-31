@@ -26,8 +26,10 @@ public class ProductDetailEntity extends BaseEntity {
      private ProductEntity productEntity;
 
 
-
     private String description;
 
 
+     public void setProductEntity(ProductEntity productEntity) {
+          this.productEntity = productEntity;
+     }
 }

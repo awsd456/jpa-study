@@ -10,4 +10,7 @@ public class ProductRes {
     private String name;
     private int price;
     private int stock;
+    private String description;
+    private String cateNm;
+    private String providerNm;
 }

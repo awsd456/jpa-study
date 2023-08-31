@@ -32,19 +32,29 @@ public class ProductEntity extends BaseEntity {
     @Column(nullable = false)
     private Integer stock;
 
-   @ManyToOne
-   @JoinColumn(name = "provider_id")
-   @ToString.Exclude //toString 찍을때 provider 제외
-   private ProviderEntity providerEntity;
+    @ManyToOne
+    @JoinColumn(name = "provider_id")
+    @ToString.Exclude //toString 찍을때 provider 제외
+    private ProviderEntity providerEntity;
 
 
-   @OneToOne(mappedBy = "productEntity")
-   private ProductDetailEntity productDetailEntity;
+    @OneToOne(mappedBy = "productEntity", cascade = {CascadeType.PERSIST, CascadeType.REFRESH}, orphanRemoval = true)
+    private ProductDetailEntity productDetailEntity;
 
 
-  @ManyToOne
-  @JoinColumn(name = "category_id")
-  @ToString.Exclude
-  private CategoryEntity categoryEntity;
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    @ToString.Exclude
+    private CategoryEntity categoryEntity;
+
+
+    public void setProductDetailEntity(ProductDetailEntity productDetailEntity) {
+        if (this.productDetailEntity != null) {
+            this.productDetailEntity.setProductEntity(null);
+        }
+
+        this.productDetailEntity = productDetailEntity;
+        this.productDetailEntity.setProductEntity(this);
+    }
 }
 
