@@ -5,16 +5,16 @@ import com.green.jpaexam.category.CategoryRepository;
 import com.green.jpaexam.entity.CategoryEntity;
 import com.green.jpaexam.entity.ProductDetailEntity;
 import com.green.jpaexam.entity.ProviderEntity;
-import com.green.jpaexam.product.model.ProductDto;
+import com.green.jpaexam.product.model.*;
 import com.green.jpaexam.entity.ProductEntity;
-import com.green.jpaexam.product.model.ProductRes;
-import com.green.jpaexam.product.model.ProductUpdDto;
 import com.green.jpaexam.provider.ProviderRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Slf4j
 @Service
@@ -23,6 +23,8 @@ public class ProductService {
     private final ProductDao dao;
     private final CategoryRepository categoryRepository;
     private final ProviderRepository providerRepository;
+    private final ProductRepository productRep;
+    private final ProductQdsl productQdsl;
 
     public ProductRes saveProduct2(ProductDto dto) {
         CategoryEntity categoryEntity = categoryRepository.findById(dto.getCateId()).get();
@@ -83,6 +85,19 @@ public class ProductService {
     public Page<ProductRes> getProductAll(Pageable page) {
         return dao.getProductAll(page);
     }
+
+
+    public List<ProductRes> getProductAllJpql(Pageable page,ProductSelAllParam param){
+        List<ProductRes> list=productRep.selProductAll(page, param);
+        return list;
+    }
+
+
+    public List<ProductResQdsl> getProductAllQdsl(Pageable pageable,String search){
+       return productQdsl.selProductAll(pageable,search);
+
+    }
+
 
     public ProductRes getProduct(Long number) {
        return dao.getProduct(number);

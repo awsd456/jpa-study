@@ -1,12 +1,12 @@
 package com.green.jpaexam.product;
 
-import com.green.jpaexam.product.model.ProductDto;
-import com.green.jpaexam.product.model.ProductRes;
-import com.green.jpaexam.product.model.ProductUpdDto;
+import com.green.jpaexam.product.model.*;
 import lombok.RequiredArgsConstructor;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.repository.query.Param;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +30,17 @@ public class ProductController {
     public ResponseEntity<Page<ProductRes>> getProductAll(
             @PageableDefault(sort="number", direction = Sort.Direction.DESC, size=20) Pageable page) {
         return ResponseEntity.ok(service.getProductAll(page));
+    }
+
+    @GetMapping("/jpql")
+    public ResponseEntity<List<ProductRes>> getProductAllJpql(@PageableDefault(sort="number", direction = Sort.Direction.DESC, size=20) Pageable page
+            ,ProductSelAllParam param){
+        return ResponseEntity.ok(service.getProductAllJpql(page,param ));
+    }
+
+    @GetMapping("/qdsl")
+    public ResponseEntity<List<ProductResQdsl>> getProductAllQdsl(@ParameterObject @PageableDefault(sort="number", direction = Sort.Direction.DESC, size=20) Pageable pageable,@RequestParam(required = false) String search){
+        return ResponseEntity.ok(service.getProductAllQdsl(pageable,search));
     }
 
     @GetMapping("/{number}")

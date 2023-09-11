@@ -23,6 +23,7 @@ public class ProductDetailEntity extends BaseEntity {
      @MapsId
      @OneToOne
      @JoinColumn(name = "product_number",columnDefinition = "BIGINT UNSIGNED")
+     @ToString.Exclude
      private ProductEntity productEntity;
 
 

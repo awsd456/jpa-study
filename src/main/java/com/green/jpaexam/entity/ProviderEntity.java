@@ -24,6 +24,7 @@ public class ProviderEntity extends BaseEntity {
     private String name;
 
 
+    @Builder.Default
     @OneToMany(mappedBy = "providerEntity",cascade = CascadeType.PERSIST)
     private List<ProductEntity> productEntityList=new ArrayList<>();
 

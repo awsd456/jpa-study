@@ -21,8 +21,7 @@ public class ProductDaoImpl implements ProductDao {
 
     private final ProductRepository productRepository;
     private final ProductDetailRepository detailRepository;
-    private final ProviderRepository providerRepository;
-    private final CategoryRepository categoryRepository;
+
 
     @Override
     public ProductRes saveProduct(ProductEntity p) {
